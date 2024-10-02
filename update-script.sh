@@ -8,7 +8,7 @@ systemctl --user daemon-reload
 cd frontend
 npm i
 npm run build
-cp public/* $HOME/Development/genes2brain_ulysses/
+cp public/* $HOME/Development/genes/data/genes2brain_ulysses/
 cd ../backend
 npm i
 npm run build
