@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd $HOME/Development/genes/backend
-. $HOME/.nvm/nvm.sh
+nvm exec 22 node --version
 npm start
