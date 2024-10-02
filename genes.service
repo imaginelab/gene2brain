@@ -1,0 +1,13 @@
+[Unit]
+Description=Genes server
+
+[Service]
+Type=simple
+User=azureuser
+WorkingDirectory=$HOME/Development/genes/backend
+ExecStart=$HOME/Development/genes/start.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
