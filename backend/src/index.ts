@@ -3,7 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import {readdir, open} from "node:fs/promises"
 import {basename} from "node:path"
 
-const data_path = "data/gene2brain_ulysses/"
+const data_path = "data/gene2brain_data/"
 const files_all = await readdir(data_path + "csv")
 const files = files_all
 // const csv_path = data_path + "csv/";
@@ -35,7 +35,7 @@ const all = files.map(file => basename(file, '.csv'))
 
 const app = express()
 
-app.get('/genes', async (req, res) => {
+app.get('/gene2brain', async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader("Access-Control-Allow-Headers", "*");
@@ -43,7 +43,7 @@ app.get('/genes', async (req, res) => {
     res.json(all)
 });
 
-app.use(express.static('data/gene2brain_ulysses'))
+app.use(express.static('data/gene2brain_data'))
 
 app.listen(3000, () => {
   console.log("started")

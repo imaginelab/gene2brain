@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd $HOME/Development/genes/backend
+cd $HOME/Development/gene2brain/backend
 $HOME/.nvm/nvm-exec npm start

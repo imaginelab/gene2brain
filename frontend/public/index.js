@@ -878,7 +878,12 @@
   }
 
   // src/index.tsx
-  function App({}) {
+  var fontStyle = document.createElement("style");
+  fontStyle.textContent = `
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+`;
+  document.head.appendChild(fontStyle);
+  function App() {
     const geneNames = useSignal([]);
     const inputText = useSignal("");
     const selected = useComputed(() => geneNames.value.includes(inputText.value.toUpperCase()) && inputText.value);
@@ -886,17 +891,62 @@
     const setInputText = (e4) => inputText.value = e4.target.value;
     useSignalEffect(() => {
       if (inputText.value && !geneNames.peek().find((g3) => g3.startsWith(inputText.value))) {
-        fetch(`genes?query=${inputText.value}`).then((res) => (console.log(res), res).json()).then((genes) => geneNames.value = (console.log(genes), geneNames).peek().concat(genes));
+        fetch(`gene2brain?query=${inputText.value}`).then((res) => (console.log(res), res).json()).then((gene2brain) => geneNames.value = (console.log(gene2brain), geneNames).peek().concat(gene2brain));
       }
     });
-    return /* @__PURE__ */ u4("div", { children: [
-      /* @__PURE__ */ u4("input", { list: "genes", value: inputText, oninput: setInputText }),
-      /* @__PURE__ */ u4("datalist", { id: "genes", children: geneNames.value.map((name) => /* @__PURE__ */ u4("option", { value: name })) }),
+    return /* @__PURE__ */ u4("div", { style: styles.container, children: [
+      /* @__PURE__ */ u4("h1", { style: styles.title, children: "Gene2Brain" }),
+      /* @__PURE__ */ u4(
+        "input",
+        {
+          list: "gene2brain",
+          value: inputText,
+          oninput: setInputText,
+          style: styles.searchBar,
+          placeholder: "Search for genes..."
+        }
+      ),
+      /* @__PURE__ */ u4("datalist", { id: "gene2brain", children: geneNames.value.map((name) => /* @__PURE__ */ u4("option", { value: name })) }),
       selected.value && /* @__PURE__ */ u4("div", { children: [
-        /* @__PURE__ */ u4("img", { style: "width: 100vw;", src: `images/${selected}.png` }),
-        /* @__PURE__ */ u4("a", { href: `csv/${selected}.csv`, children: "data" })
+        /* @__PURE__ */ u4("img", { style: styles.image, src: `images/${selected}.jpg` }),
+        /* @__PURE__ */ u4("a", { href: `csv/${selected}.csv`, children: "Download data" })
       ] })
     ] });
   }
+  var styles = {
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      backgroundColor: "black",
+      color: "white",
+      fontFamily: "'Lato', sans-serif"
+    },
+    title: {
+      fontSize: "4rem",
+      marginBottom: "20px",
+      textAlign: "center",
+      color: "white",
+      fontWeight: "700"
+      // Adjust font weight if needed
+    },
+    searchBar: {
+      padding: "10px",
+      fontSize: "1.2rem",
+      width: "300px",
+      textAlign: "center",
+      borderRadius: "5px",
+      border: "2px solid white",
+      backgroundColor: "transparent",
+      color: "white",
+      outline: "none",
+      fontFamily: "'Lato', sans-serif"
+    },
+    image: {
+      width: "100vw"
+    }
+  };
   B(/* @__PURE__ */ u4(App, {}), document.body);
 })();
